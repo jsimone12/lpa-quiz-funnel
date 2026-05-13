@@ -36,9 +36,9 @@ export const questions: Question[] = [
     bant: 'Need',
     question: 'What do you think is the biggest issue holding your business back?',
     answers: [
-      { text: "I'm still not certain of my business idea", points: 0, flag: 'pre-business' },
-      { text: "I don't know how to separate myself from the competition", points: 2 },
       { text: "I don't have systems for getting new clients or for managing my current ones", points: 3 },
+      { text: "I don't know how to separate myself from the competition", points: 2 },
+      { text: "I'm still not certain of my business idea", points: 0, flag: 'pre-business' },
     ],
   },
   {
