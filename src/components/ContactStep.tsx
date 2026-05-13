@@ -22,8 +22,19 @@ export default function ContactStep({ resultStep }: Props) {
 
     try {
       saveContact(form);
-      // GHL webhook will be wired here after build
-      // await fetch('/api/submit', { method: 'POST', body: JSON.stringify({ ...form, ...result }) });
+      await fetch('https://services.leadconnectorhq.com/hooks/DvWTrdD23UD09zv6GgZj/webhook-trigger/2e1f9fe6-b5a0-4d04-af24-2edec50556ea', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    firstName: form.firstName,
+    lastName: form.lastName,
+    email: form.email,
+    phone: form.phone,
+    quizScore: result.score,
+    quizOutcome: result.outcome,
+    paymentProcessor: result.paymentProcessor,
+  }),
+});
       setStep(resultStep);
     } catch {
       setError('Something went wrong. Please try again.');
