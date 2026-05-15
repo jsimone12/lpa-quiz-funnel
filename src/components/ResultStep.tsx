@@ -13,6 +13,7 @@ const OUTCOMES = {
     cta: "Save Your Spot",
     ctaUrl: "https://webinar.jsimonesolutions.com/confirmation-page",
     processor: "You're already set up with Stripe, that tells me you're serious about your business."
+  accent: 'var(--gold)',
   },
   'ready-to-start': {
     label: "✦ Let's Build",
@@ -21,6 +22,7 @@ const OUTCOMES = {
     cta: "Save Your Spot",
     ctaUrl: "https://webinar.jsimonesolutions.com/confirmation-page",
     processor: "PayPal is a solid start. We'll level up your payment infrastructure as you scale."
+  accent: 'var(--gold)',
   },
   nurture: {
     label: 'Your Journey Starts Here',
