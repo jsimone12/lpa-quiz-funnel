@@ -12,7 +12,7 @@ const OUTCOMES = {
     body: "Based on your answers you already have what it takes to scale. The missing piece is the system and that's exactly what I'm covering in my free live Master Class this Monday May 18th at 8:00 PM EST. Your spot is reserved. Check your inbox for the details.",
     cta: "Save Your Spot",
     ctaUrl: "https://webinar.jsimonesolutions.com/confirmation-page",
-    processor: "You're already set up with Stripe, that tells me you're serious about your business."
+    processor: "You're already set up with Stripe, that tells me you're serious about your business.",
   accent: 'var(--gold)',
   },
   'ready-to-start': {
