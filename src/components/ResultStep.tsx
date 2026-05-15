@@ -21,7 +21,7 @@ const OUTCOMES = {
     body: "You're not behind, you're actually right on time. The missing piece is knowing exactly what to do first and that's exactly what I'm covering in my free live Master Class this Monday May 18th at 8:00 PM EST. Your spot is reserved. Check your inbox for the details.",
     cta: "Save Your Spot",
     ctaUrl: "https://webinar.jsimonesolutions.com/confirmation-page",
-    processor: "PayPal is a solid start. We'll level up your payment infrastructure as you scale."
+    processor: "PayPal is a solid start. We'll level up your payment infrastructure as you scale.",
   accent: 'var(--gold)',
   },
   nurture: {
