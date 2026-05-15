@@ -7,22 +7,20 @@ const SKOOL_URL = 'https://www.skool.com/credit-cleaners-2490/about';
 
 const OUTCOMES = {
   qualified: {
-    label: 'You\'re Ready to Scale',
-    headline: 'Your results are in.',
-    body: "Based on your answers you already have what it takes to scale, you're missing the systems to really succeed. Let's get on a strategy call and map out a gameplan that would get you exactly where you're trying to go.",
-    cta: 'Book Your Strategy Call',
-    ctaUrl: BOOKING_URL,
-    accent: 'var(--gold)',
-    badge: '✦ Qualified',
+    label: "✦ Qualified",
+    headline: "Your results are in.",
+    body: "Based on your answers you already have what it takes to scale. The missing piece is the system and that's exactly what I'm covering in my free live Master Class this Monday May 18th at 8:00 PM EST. Your spot is reserved. Check your inbox for the details.",
+    cta: "Save Your Spot",
+    ctaUrl: "https://webinar.jsimonesolutions.com/confirmation-page",
+    processor: "You're already set up with Stripe, that tells me you're serious about your business."
   },
   'ready-to-start': {
-    label: 'Your Timing Is Perfect',
-    headline: 'Your results are in.',
-    body: "You're not behind, you're actually right on time. The hardest part of starting a business online is knowing exactly what to do first, but don't worry I got you. Let's map out your path together.",
-    cta: 'Book Your Strategy Call',
-    ctaUrl: BOOKING_URL,
-    accent: 'var(--sage)',
-    badge: '✦ Let\'s Build',
+    label: "✦ Let's Build",
+    headline: "Your results are in.",
+    body: "You're not behind, you're actually right on time. The missing piece is knowing exactly what to do first and that's exactly what I'm covering in my free live Master Class this Monday May 18th at 8:00 PM EST. Your spot is reserved. Check your inbox for the details.",
+    cta: "Save Your Spot",
+    ctaUrl: "https://webinar.jsimonesolutions.com/confirmation-page",
+    processor: "PayPal is a solid start. We'll level up your payment infrastructure as you scale."
   },
   nurture: {
     label: 'Your Journey Starts Here',
