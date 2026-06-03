@@ -28,7 +28,7 @@ export const questions: Question[] = [
     answers: [
       { text: "It's just me so I'm wearing all the hats", points: 2 },
       { text: 'I have a business partner and we collaborate together to make things go', points: 2 },
-      { text: "I haven't started the business just yet but I plan to in the next 3 months", points: 1, flag: 'pre-business' },
+      { text: "I haven't started a business yet but I would love to have a digital product live in the next 30 days", points: 1, flag: 'pre-business' },
     ],
   },
   {
@@ -38,7 +38,7 @@ export const questions: Question[] = [
     answers: [
       { text: "I don't have systems for getting new clients or for managing my current ones", points: 3 },
       { text: "I don't know how to separate myself from the competition", points: 2 },
-      { text: "I'm still not certain of my business idea", points: 0, flag: 'pre-business' },
+      { text: "I still don't have a fully formed business idea or strategy", points: 0, flag: 'pre-business' },
     ],
   },
   {
@@ -46,8 +46,8 @@ export const questions: Question[] = [
     bant: 'Budget',
     question: 'Is investing in your business a priority for you to solve this problem?',
     answers: [
-      { text: 'Yes, I have a budget of up to $1,500 for the right solution', points: 3 },
-      { text: 'Kind of, I could probably afford between $750 and $1,000 for a guaranteed result', points: 2 },
+      { text: 'Yes, I have a budget of up to $500 for the right solution', points: 3 },
+      { text: 'Kind of, I could probably afford between $150 and $300 for a guaranteed result', points: 2 },
       { text: "Don't have any extra money right now but lots of drive and motivation", points: 0, flag: 'hard-disqualify' },
     ],
   },
@@ -56,9 +56,9 @@ export const questions: Question[] = [
     bant: 'Timing',
     question: 'How quickly do you need to be making more sales in your business?',
     answers: [
-      { text: 'I need more sales now and a solution that can be implemented in 30 days or faster', points: 3 },
-      { text: "I've got a little wiggle room but I would love to see improvements in the next 6 months", points: 1 },
-      { text: 'I really want to see myself having started this business in the next 90 days', points: 2 },
+      { text: "I need more sales now and a solution that can be implemented in the next 7 business days is what I'm looking for", points: 3 },
+      { text: "I've got wiggle room but need to see my current business make some money in the next two weeks", points: 2 },
+      { text: 'I want to see myself having this business up and running within the next 30 days', points: 1 },
     ],
   },
   {
@@ -81,31 +81,23 @@ export interface ScoreResult {
 }
 
 export function calculateOutcome(answers: Record<string, Answer>): ScoreResult {
-  // Hard disqualify check first
+  const paymentProcessor = answers['q6']?.tag || '';
+
+  // Budget (q4) is the only gate. The no-money answer is the single path to nurture.
   const budgetAnswer = answers['q4'];
   if (budgetAnswer?.flag === 'hard-disqualify') {
-    return { outcome: 'nurture', score: 0, paymentProcessor: answers['q6']?.tag || '' };
+    return { outcome: 'nurture', score: 0, paymentProcessor };
   }
 
   let score = 0;
   for (const answer of Object.values(answers)) {
-    if (answer.flag !== 'hard-disqualify') {
-      score += answer.points;
-    }
+    score += answer.points;
   }
 
-  const paymentProcessor = answers['q6']?.tag || '';
-
-  // Check if they have strong budget + timing despite pre-business flags
-  const budgetPoints = answers['q4']?.points || 0;
-  const timingPoints = answers['q5']?.points || 0;
-  const strongBudgetTiming = budgetPoints >= 2 && timingPoints >= 2;
-
+  // Any paying budget routes to a call. Score only splits the tag.
   if (score >= 10) {
     return { outcome: 'qualified', score, paymentProcessor };
-  } else if (strongBudgetTiming) {
-    return { outcome: 'ready-to-start', score, paymentProcessor };
   } else {
-    return { outcome: 'nurture', score, paymentProcessor };
+    return { outcome: 'ready-to-start', score, paymentProcessor };
   }
 }

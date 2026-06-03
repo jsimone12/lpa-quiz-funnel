@@ -3,6 +3,8 @@
 import { useQuiz } from '@/lib/context';
 
 const BOOKING_URL = 'https://api.leadconnectorhq.com/widget/bookings/systems-strategy-session-1234';
+const BUILD_CALL_URL = 'https://api.leadconnectorhq.com/widget/bookings/business-ideas-brainstorming';
+const GIFT_URL = 'https://businessideagenerator.jsimonesolutions.com/getstarted';
 const SKOOL_URL = 'https://www.skool.com/credit-cleaners-2490/about';
 
 const OUTCOMES = {
@@ -10,9 +12,11 @@ const OUTCOMES = {
   label: "✦ Qualified",
   badge: "✦ Qualified",
   headline: "Your results are in.",
-  body: "Based on your answers you already have what it takes to scale. The missing piece is the system and that's exactly what I'm covering in my free live Master Class this Monday May 18th at 8:00 PM EST. Your spot is reserved. Check your inbox for the details.",
-  cta: "Save Your Spot",
-  ctaUrl: "https://webinar.jsimonesolutions.com/confirmation-page",
+  body: "Based on your answers you already have what it takes to scale. The missing piece is the system, and that is what we will map out together. Book your strategy call below.",
+  cta: "Book Your Strategy Call",
+  ctaUrl: BOOKING_URL,
+  secondaryCta: "",
+  secondaryCtaUrl: "",
   processor: "You're already set up with Stripe, that tells me you're serious about your business.",
   accent: 'var(--gold)',
 },
@@ -20,9 +24,11 @@ const OUTCOMES = {
   label: "✦ Let's Build",
   badge: "✦ Let's Build",
   headline: "Your results are in.",
-  body: "You're not behind, you're actually right on time. The missing piece is knowing exactly what to do first and that's exactly what I'm covering in my free live Master Class this Monday May 18th at 8:00 PM EST. Your spot is reserved. Check your inbox for the details.",
-  cta: "Save Your Spot",
-  ctaUrl: "https://webinar.jsimonesolutions.com/confirmation-page",
+  body: "You are not behind, you are right on time. The biggest win right now is knowing exactly what to do first, and that is what we will figure out on your call. As my bonus gift to you, you're also getting FREE access to my Business Idea Generator to give you some money making momentum before the call. I'll see you there.",
+  cta: "Book Your Strategy Call",
+  ctaUrl: BUILD_CALL_URL,
+  secondaryCta: "Get the Free Business Idea Generator",
+  secondaryCtaUrl: GIFT_URL,
   processor: "PayPal is a solid start. We'll level up your payment infrastructure as you scale.",
   accent: 'var(--gold)',
 },
@@ -32,15 +38,17 @@ const OUTCOMES = {
     body: "Looks like you're off to a solid start and I want to help you build some momentum. I've got a FREE Skool community where I'm dropping gems everyday for early stage entrepreneurs. I think it would be a great fit. Click the link below to join.",
     cta: 'Join the Free Community',
     ctaUrl: SKOOL_URL,
+    secondaryCta: "",
+    secondaryCtaUrl: "",
     accent: 'var(--cream)',
     badge: '✦ Keep Growing',
   },
 };
 
 const PROCESSOR_NOTE: Record<string, string> = {
-  stripe: 'You\'re already set up with Stripe — that tells me you\'re serious about your business.',
+  stripe: 'You\'re already set up with Stripe, that tells me you\'re serious about your business.',
   paypal: 'PayPal is a solid start. We\'ll level up your payment infrastructure as you scale.',
-  'zelle-cashapp': 'Zelle and CashApp work — and when you\'re ready to scale, we\'ll build out a real checkout flow for you.',
+  'zelle-cashapp': 'Zelle and CashApp work, and when you\'re ready to scale, we\'ll build out a real checkout flow for you.',
 };
 
 export default function ResultStep() {
@@ -124,6 +132,25 @@ export default function ResultStep() {
         >
           {outcome.cta}
         </a>
+
+        {outcome.secondaryCta && outcome.secondaryCtaUrl && (
+          <a
+            href={outcome.secondaryCtaUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block w-full rounded-xl py-4 mt-3 text-sm uppercase tracking-widest text-center"
+            style={{
+              textDecoration: 'none',
+              color: outcome.accent,
+              border: `1px solid ${outcome.accent}`,
+              fontFamily: "'DM Sans', sans-serif",
+              fontWeight: 700,
+              letterSpacing: '0.05em',
+            }}
+          >
+            {outcome.secondaryCta}
+          </a>
+        )}
       </div>
 
       {/* Footer */}
