@@ -43,6 +43,17 @@ const OUTCOMES = {
     accent: 'var(--cream)',
     badge: '✦ Keep Growing',
   },
+  'no-idea': {
+    label: 'Start With The Idea',
+    headline: 'Your results are in.',
+    body: "You've got the right mindset about money, you just don't know what to do with it yet. And that's exactly why I built the Business Idea Generator for early entrepreneurs in your exact position. In just a couple of minutes it will give you personalized business ideas that leverage your existing skills and interest to create a product or service you can actually sell. Tap the button below and let's figure out what's the best fit for you.",
+    cta: 'Get My Free Business Idea Generator',
+    ctaUrl: GIFT_URL,
+    secondaryCta: "",
+    secondaryCtaUrl: "",
+    accent: 'var(--gold)',
+    badge: '✦ Start With The Idea',
+  },
 };
 
 const PROCESSOR_NOTE: Record<string, string> = {
@@ -52,12 +63,13 @@ const PROCESSOR_NOTE: Record<string, string> = {
 };
 
 export default function ResultStep() {
-  const { result, contact } = useQuiz();
+  const { result, contact, setStep } = useQuiz();
 
   if (!result) return null;
 
   const outcome = OUTCOMES[result.outcome];
-  const processorNote = PROCESSOR_NOTE[result.paymentProcessor] || '';
+  const processorNote =
+    result.outcome === 'no-idea' ? '' : PROCESSOR_NOTE[result.paymentProcessor] || '';
 
   return (
     <div className="w-full max-w-lg animate-fade-in-up">
@@ -150,6 +162,16 @@ export default function ResultStep() {
           >
             {outcome.secondaryCta}
           </a>
+        )}
+
+        {result.outcome === 'no-idea' && (
+          <button
+            onClick={() => setStep(0)}
+            className="block w-full mt-4 text-xs underline opacity-40 hover:opacity-70 transition-opacity text-center"
+            style={{ color: 'var(--cream)', fontFamily: "'DM Sans', sans-serif", background: 'transparent' }}
+          >
+            No thanks, I'm not interested
+          </button>
         )}
       </div>
 

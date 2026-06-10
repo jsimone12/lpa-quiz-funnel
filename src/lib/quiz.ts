@@ -18,7 +18,7 @@ export const questions: Question[] = [
     question: 'Are you running a business online?',
     answers: [
       { text: 'Yes and I want to make more sales', points: 2 },
-      { text: 'No, but I want to learn how to start one', points: 1 },
+      { text: 'No, but I want to learn how to start one', points: 1, flag: 'pre-business' },
     ],
   },
   {
@@ -72,7 +72,7 @@ export const questions: Question[] = [
   },
 ];
 
-export type Outcome = 'qualified' | 'ready-to-start' | 'nurture';
+export type Outcome = 'qualified' | 'ready-to-start' | 'nurture' | 'no-idea';
 
 export interface ScoreResult {
   outcome: Outcome;
@@ -83,9 +83,18 @@ export interface ScoreResult {
 export function calculateOutcome(answers: Record<string, Answer>): ScoreResult {
   const paymentProcessor = answers['q6']?.tag || '';
 
-  // Budget (q4) is the only gate. The no-money answer is the single path to nurture.
+  // Budget (q4) is the gate. A paying budget always routes to a paying bucket,
+  // even with no idea yet (they get signed and the generator comes free).
   const budgetAnswer = answers['q4'];
   if (budgetAnswer?.flag === 'hard-disqualify') {
+    // No-money group. Split off the true "no idea yet" people for the generator.
+    const noIdea =
+      answers['q1']?.flag === 'pre-business' &&
+      answers['q2']?.flag === 'pre-business' &&
+      answers['q3']?.flag === 'pre-business';
+    if (noIdea) {
+      return { outcome: 'no-idea', score: 0, paymentProcessor };
+    }
     return { outcome: 'nurture', score: 0, paymentProcessor };
   }
 
