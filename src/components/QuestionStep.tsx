@@ -26,27 +26,26 @@ export default function QuestionStep({ question, stepIndex, totalQuestions, calc
     setStep(nextStep >= totalQuestions ? calculatingStep : nextStep);
   };
 
+  const handleBack = () => {
+    if (selected) saveAnswer(question.id, selected);
+    setStep(stepIndex - 1);
+  };
+
   const isYesNo = question.answers.length === 2 && stepIndex === 0;
 
   return (
     <div className="w-full max-w-xl animate-fade-in-up">
-      {question.bant && (
-        <div className="mb-4">
-          <span
-            className="text-xs uppercase tracking-widest px-3 py-1 rounded-full"
-            style={{
-              color: 'var(--gold)',
-              border: '1px solid rgba(201,168,76,0.3)',
-              fontFamily: "'DM Sans', sans-serif",
-            }}
-          >
-            {question.bant}
-          </span>
-        </div>
+      {stepIndex === 0 && (
+        <h1
+          className="font-display text-3xl sm:text-4xl md:text-5xl mb-5 leading-tight"
+          style={{ color: 'var(--gold)' }}
+        >
+          When Should You Quit Your Job Quiz
+        </h1>
       )}
 
       <h2
-        className="font-display text-2xl md:text-3xl mb-8 leading-snug"
+        className="font-display text-2xl sm:text-2xl md:text-3xl mb-8 leading-snug"
         style={{ color: 'var(--cream)' }}
       >
         {question.question}
@@ -91,6 +90,16 @@ export default function QuestionStep({ question, stepIndex, totalQuestions, calc
       >
         {stepIndex === totalQuestions - 1 ? 'See My Results' : 'Next'}
       </button>
+
+      {stepIndex > 0 && (
+        <button
+          onClick={handleBack}
+          className="w-full mt-3 py-3 text-xs uppercase tracking-widest opacity-50 hover:opacity-90 transition-opacity"
+          style={{ color: 'var(--cream)', fontFamily: "'DM Sans', sans-serif", background: 'transparent' }}
+        >
+          ← Back
+        </button>
+      )}
     </div>
   );
 }

@@ -44,21 +44,21 @@ export const questions: Question[] = [
   {
     id: 'q4',
     bant: 'Budget',
-    question: 'Is investing in your business a priority for you to solve this problem?',
+    question: 'When you think about pulling the trigger on investing in starting/scaling your business what feels comfortable?',
     answers: [
-      { text: 'Yes, I have a budget of up to $500 for the right solution', points: 3 },
-      { text: 'Kind of, I could probably afford between $150 and $300 for a guaranteed result', points: 2 },
-      { text: "Don't have any extra money right now but lots of drive and motivation", points: 0, flag: 'hard-disqualify' },
+      { text: '$500 for systems and strategies that produce results in 30 days or less would be an ideal investment', points: 3 },
+      { text: 'Anywhere between $150 to $300 makes sense for my budget but I would need that to pay off within the first 90 days', points: 2 },
+      { text: "I'm not ready to put any money behind this mission yet, but I do have plenty of motivation to learn.", points: 0, flag: 'hard-disqualify' },
     ],
   },
   {
     id: 'q5',
     bant: 'Timing',
-    question: 'How quickly do you need to be making more sales in your business?',
+    question: 'How quickly would you like to see your own business producing real profits?',
     answers: [
-      { text: "I need more sales now and a solution that can be implemented in the next 7 business days is what I'm looking for", points: 3 },
-      { text: "I've got wiggle room but need to see my current business make some money in the next two weeks", points: 2 },
-      { text: 'I want to see myself having this business up and running within the next 30 days', points: 1 },
+      { text: "I need more sales right now so a solution that can be executed and producing in 7 business days or less is what I'm looking for", points: 3 },
+      { text: "I'm having some success in my own business already so growing my current profits in the next 2 weeks would be ideal", points: 2 },
+      { text: 'I want to see my own business up and running with the potential for profit within the next 30 days.', points: 1 },
     ],
   },
   {
