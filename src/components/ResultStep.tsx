@@ -8,10 +8,10 @@ const WEBINAR_URL = 'https://webinar.jsimonesolutions.com/confirmation-page';
 
 const OUTCOMES = {
   qualified: {
-  label: "✦ Qualified",
-  badge: "✦ Qualified",
+  label: "✦ 1 Year Max",
+  badge: "✦ 1 Year Max",
   headline: "Your results are in.",
-  body: "In my opinion, you're less than 12 months away from the life you truly want to live. Quitting corporate doesn't have to be a dream, because you have more than the required skills and resources you just need a simple roadmap to follow. That's exactly what I cover in my free When Should You Quit Webinar. It's a simple straight forward session where I walk you through the exact steps I took to quit my own corporate job and start the business that now lets me live and work from anywhere in the world making more money than I did before. Click the button below to confirm your registration and I'll see you there.",
+  body: "You're less than 12 months away from the life you truly want to live. Quitting corporate doesn't have to be a dream, you just need a simple roadmap to follow to make it a reality. If that feels like a practical next step you should check out my free When Should You Quit Webinar. In it I walk you through the exact steps I took to quit my own corporate job and start the business that now lets me live and work from anywhere in the world. Click the button below to confirm your registration and I'll see you there.",
   cta: "Confirm My Registration",
   ctaUrl: WEBINAR_URL,
   secondaryCta: "",
@@ -19,15 +19,15 @@ const OUTCOMES = {
   accent: 'var(--gold)',
 },
 'nurture': {
-    label: 'Your Journey Starts Here',
+    label: 'Year and Half TOPS',
     headline: 'Your results are in.',
-    body: "Looks like you're off to a solid start and I want to help you build some momentum. I've got a FREE Skool community where I'm dropping gems everyday for early stage entrepreneurs. I think it would be a great fit. Click the link below to join.",
+    body: "Looks like you're off to a solid start and I want to help you build some momentum. Looks like you JUST missed registering for my next live webinar (spots fill up fast) BUT I've got a FREE Skool community where I'm dropping gems everyday for early stage entrepreneurs. I think it would be a great fit. Click the link below to join.",
     cta: 'Join the Free Community',
     ctaUrl: SKOOL_URL,
     secondaryCta: "",
     secondaryCtaUrl: "",
     accent: 'var(--cream)',
-    badge: '✦ Keep Growing',
+    badge: '✦ Year and Half TOPS',
   },
   'no-idea': {
     label: 'Start With The Idea',
