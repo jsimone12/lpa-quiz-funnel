@@ -56,7 +56,7 @@ export default function QuestionStep({ question, stepIndex, totalQuestions, calc
           <button
             key={i}
             onClick={() => handleSelect(answer)}
-            className={`answer-card rounded-xl px-6 py-4 text-left ${selected?.text === answer.text ? 'selected' : ''}`}
+            className={`answer-card rounded-xl px-6 py-4 text-left ${isYesNo ? 'md:flex-1' : ''} ${selected?.text === answer.text ? 'selected' : ''}`}
             style={{ color: 'var(--cream)' }}
           >
             <div className="flex items-center gap-4">
