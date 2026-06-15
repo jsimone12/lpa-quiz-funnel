@@ -21,7 +21,7 @@ const OUTCOMES = {
 'nurture': {
     label: 'Year and Half TOPS',
     headline: 'Your results are in.',
-    body: "Looks like you're off to a solid start and I want to help you build some momentum. Looks like you JUST missed registering for my next live webinar (spots fill up fast) BUT I've got a FREE Skool community where I'm dropping gems everyday for early stage entrepreneurs. I think it would be a great fit. Click the link below to join.",
+    body: "You're off to a solid start and I want to help you build some momentum. Looks like you JUST missed registering for my next live webinar (spots fill up fast) BUT I've got a FREE Skool community where I'm dropping gems everyday for early stage entrepreneurs. I think it would be a great fit. Click the link below to join.",
     cta: 'Join the Free Community',
     ctaUrl: SKOOL_URL,
     secondaryCta: "",
