@@ -7,7 +7,6 @@ export interface Answer {
 
 export interface Question {
   id: string;
-  bant?: string;
   question: string;
   answers: Answer[];
 }
@@ -17,62 +16,58 @@ export const questions: Question[] = [
     id: 'q1',
     question: 'Are you running a business online?',
     answers: [
-      { text: 'Yes and I want to make more sales', points: 2 },
-      { text: 'No, but I want to learn how to start one', points: 1, flag: 'pre-business' },
+      { text: 'Yes and I want to make enough money from it to quit my 9-5', points: 2 },
+      { text: 'No, but I want to start one', points: 1, flag: 'pre-business' },
     ],
   },
   {
     id: 'q2',
-    bant: 'Authority',
-    question: 'What is your role in this business?',
+    question: 'What is your current or ideal business structure?',
     answers: [
-      { text: "It's just me so I'm wearing all the hats", points: 2 },
-      { text: 'I have a business partner and we collaborate together to make things go', points: 2 },
-      { text: "I haven't started a business yet but I would love to have a digital product live in the next 30 days", points: 1, flag: 'pre-business' },
+      { text: 'Just me on my own calling the shots and making my own money', points: 2 },
+      { text: 'Me and a business partner splitting everything 50/50', points: 2 },
+      { text: 'A full team where money and responsibilities are divided equally', points: 2 },
     ],
   },
   {
     id: 'q3',
-    bant: 'Need',
-    question: 'What do you think is the biggest issue holding your business back?',
+    question: 'What is your biggest fear or challenge when it comes to running a business?',
     answers: [
-      { text: "I don't have systems for getting new clients or for managing my current ones", points: 3 },
-      { text: "I don't know how to separate myself from the competition", points: 2 },
-      { text: "I still don't have a fully formed business idea or strategy", points: 0, flag: 'pre-business' },
+      { text: 'Not having enough customers to actually make a profit.', points: 2 },
+      { text: 'Not knowing enough about marketing and sales', points: 2 },
+      { text: 'Getting clients, but not having the time or resources to deliver the experience they deserve', points: 2 },
     ],
   },
   {
     id: 'q4',
-    bant: 'Budget',
-    question: 'When you think about pulling the trigger on investing in starting/scaling your business what feels comfortable?',
+    question: 'How much revenue would your own digital business need to make in a year to match or even exceed your current salary?',
     answers: [
-      { text: '$500 for systems and strategies that produce results in 30 days or less would be an ideal investment', points: 3 },
-      { text: 'Anywhere between $150 to $300 makes sense for my budget but I would need that to pay off within the first 90 days', points: 2 },
-      { text: "I'm not ready to put any money behind this mission yet, but I do have plenty of motivation to learn.", points: 0, flag: 'hard-disqualify' },
+      { text: '$40,000 - $70,000', points: 0, flag: 'hard-disqualify' },
+      { text: '$70,000 - $100,000', points: 2 },
+      { text: '$100,000+', points: 3 },
     ],
   },
   {
     id: 'q5',
-    bant: 'Timing',
     question: 'How quickly would you like to see your own business producing real profits?',
     answers: [
-      { text: "I need more sales right now so a solution that can be executed and producing in 7 business days or less is what I'm looking for", points: 3 },
-      { text: "I'm having some success in my own business already so growing my current profits in the next 2 weeks would be ideal", points: 2 },
-      { text: 'I want to see my own business up and running with the potential for profit within the next 30 days.', points: 1 },
+      { text: 'I would love to see my business with improved profits within the next 7 days', points: 3 },
+      { text: "I'm just getting started with my business so if I was able to turn a profit in 14 days that would be amazing", points: 2 },
+      { text: 'I want to be able to start my own business from scratch with the potential for profits in the next 30 days.', points: 1, flag: 'pre-business' },
     ],
   },
   {
     id: 'q6',
-    question: 'Which payment processor do you primarily use?',
+    question: 'Are you familiar with using online payment processors?',
     answers: [
-      { text: 'Stripe', points: 1, tag: 'stripe' },
-      { text: 'PayPal', points: 1, tag: 'paypal' },
-      { text: 'Zelle / CashApp', points: 1, tag: 'zelle-cashapp' },
+      { text: 'Yes I already use Stripe/PayPal/Gumroad', points: 3, tag: 'has-processor' },
+      { text: "I'm familiar but right now I just have people pay me with Zelle/CashApp", points: 2, tag: 'zelle-cashapp' },
+      { text: "I've heard of these processors but I haven't actually ever sold anything so I haven't needed one.", points: 0, tag: 'none', flag: 'pre-business' },
     ],
   },
 ];
 
-export type Outcome = 'qualified' | 'ready-to-start' | 'nurture' | 'no-idea';
+export type Outcome = 'qualified' | 'nurture' | 'no-idea';
 
 export interface ScoreResult {
   outcome: Outcome;
@@ -83,30 +78,25 @@ export interface ScoreResult {
 export function calculateOutcome(answers: Record<string, Answer>): ScoreResult {
   const paymentProcessor = answers['q6']?.tag || '';
 
-  // Budget (q4) is the gate. A paying budget always routes to a paying bucket,
-  // even with no idea yet (they get signed and the generator comes free).
-  const budgetAnswer = answers['q4'];
-  if (budgetAnswer?.flag === 'hard-disqualify') {
-    // No-money group. Split off the true "no idea yet" people for the generator.
-    const noIdea =
-      answers['q1']?.flag === 'pre-business' &&
-      answers['q2']?.flag === 'pre-business' &&
-      answers['q3']?.flag === 'pre-business';
-    if (noIdea) {
-      return { outcome: 'no-idea', score: 0, paymentProcessor };
-    }
-    return { outcome: 'nurture', score: 0, paymentProcessor };
+  // Revenue goal (q4) is the qualifier. The $40k-70k tier does not qualify
+  // financially. Both higher tiers qualify and route to webinar registration.
+  const goal = answers['q4'];
+  const financiallyQualified = goal?.flag !== 'hard-disqualify';
+
+  if (financiallyQualified) {
+    return { outcome: 'qualified', score: 0, paymentProcessor };
   }
 
-  let score = 0;
-  for (const answer of Object.values(answers)) {
-    score += answer.points;
-  }
+  // Did not qualify financially. If every signal points to no business yet
+  // (no business, building from scratch, never sold anything), offer the
+  // Business Idea Generator. Otherwise nurture via the free community.
+  const noBusiness =
+    answers['q1']?.flag === 'pre-business' &&
+    answers['q5']?.flag === 'pre-business' &&
+    answers['q6']?.flag === 'pre-business';
 
-  // Any paying budget routes to a call. Score only splits the tag.
-  if (score >= 10) {
-    return { outcome: 'qualified', score, paymentProcessor };
-  } else {
-    return { outcome: 'ready-to-start', score, paymentProcessor };
+  if (noBusiness) {
+    return { outcome: 'no-idea', score: 0, paymentProcessor };
   }
+  return { outcome: 'nurture', score: 0, paymentProcessor };
 }
