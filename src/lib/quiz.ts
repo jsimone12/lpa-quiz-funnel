@@ -42,7 +42,7 @@ export const questions: Question[] = [
     id: 'q4',
     question: 'How much revenue would your own digital business need to make in a year to match or even exceed your current salary?',
     answers: [
-      { text: '$40,000 - $70,000', points: 0, flag: 'hard-disqualify' },
+      { text: '$40,000 - $70,000', points: 0 },
       { text: '$70,000 - $100,000', points: 2 },
       { text: '$100,000+', points: 3 },
     ],
@@ -58,11 +58,11 @@ export const questions: Question[] = [
   },
   {
     id: 'q6',
-    question: 'Are you familiar with using online payment processors?',
+    question: 'What level of time and money could you reasonably invest in building a business that lets you quit corporate?',
     answers: [
-      { text: 'Yes I already use Stripe/PayPal/Gumroad', points: 3, tag: 'has-processor' },
-      { text: "I'm familiar but right now I just have people pay me with Zelle/CashApp", points: 2, tag: 'zelle-cashapp' },
-      { text: "I've heard of these processors but I haven't actually ever sold anything so I haven't needed one.", points: 0, tag: 'none', flag: 'pre-business' },
+      { text: 'I can spend up to $100 and probably have 6-10 hours a week I can spare', points: 0, flag: 'hard-disqualify' },
+      { text: '$300-$500 is doable but I probably only have 4-5 hours a week that are really my own', points: 2 },
+      { text: "$750-$1,000 is my budget but I doubt I even have 2-3 hours of real free time", points: 3 },
     ],
   },
 ];
@@ -78,22 +78,21 @@ export interface ScoreResult {
 export function calculateOutcome(answers: Record<string, Answer>): ScoreResult {
   const paymentProcessor = answers['q6']?.tag || '';
 
-  // Revenue goal (q4) is the qualifier. The $40k-70k tier does not qualify
-  // financially. Both higher tiers qualify and route to webinar registration.
-  const goal = answers['q4'];
-  const financiallyQualified = goal?.flag !== 'hard-disqualify';
+  // Time + money (q6) is the sole qualifier. The "up to $100" tier does not
+  // qualify. Both higher tiers qualify and route to webinar registration.
+  const invest = answers['q6'];
+  const disqualified = invest?.flag === 'hard-disqualify';
 
-  if (financiallyQualified) {
+  if (!disqualified) {
     return { outcome: 'qualified', score: 0, paymentProcessor };
   }
 
-  // Did not qualify financially. If every signal points to no business yet
-  // (no business, building from scratch, never sold anything), offer the
-  // Business Idea Generator. Otherwise nurture via the free community.
+  // Did not qualify. If the remaining signals point to no business yet
+  // (no business, building from scratch), offer the Business Idea Generator.
+  // Otherwise nurture via the free community.
   const noBusiness =
     answers['q1']?.flag === 'pre-business' &&
-    answers['q5']?.flag === 'pre-business' &&
-    answers['q6']?.flag === 'pre-business';
+    answers['q5']?.flag === 'pre-business';
 
   if (noBusiness) {
     return { outcome: 'no-idea', score: 0, paymentProcessor };
