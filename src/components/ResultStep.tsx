@@ -52,7 +52,8 @@ export default function ResultStep() {
 
   if (!result) return null;
 
-  const outcome = OUTCOMES[result.outcome];
+  // TEMP: unify all outcomes to the qualified screen through Monday night's masterclass. Revert after.
+  const outcome = OUTCOMES['qualified'];
   const processorNote =
     result.outcome === 'nurture' ? PROCESSOR_NOTE[result.paymentProcessor] || '' : '';
 
@@ -149,7 +150,8 @@ export default function ResultStep() {
           </a>
         )}
 
-        {result.outcome === 'no-idea' && (
+        {/* TEMP: hidden during the qualified/disqualified screen unification. Revert after Monday night. */}
+        {false && result.outcome === 'no-idea' && (
           <button
             onClick={() => setStep(0)}
             className="block w-full mt-4 text-xs underline opacity-40 hover:opacity-70 transition-opacity text-center"
