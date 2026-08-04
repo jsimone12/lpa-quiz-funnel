@@ -2,60 +2,41 @@
 
 import { useQuiz } from '@/lib/context';
 
-const GIFT_URL = 'https://businessideagenerator.jsimonesolutions.com/getstarted';
-const SKOOL_URL = 'https://www.skool.com/credit-cleaners-2490/about';
-const WEBINAR_URL = 'https://webinar.jsimonesolutions.com/confirmation-page';
+const WEBINAR_URL = 'https://webinar.jsimonesolutions.com/confirmation-page-954321';
 
 const OUTCOMES = {
-  qualified: {
-  label: "✦ 1 Year Max",
-  badge: "✦ 1 Year Max",
-  headline: "Your results are in.",
-  body: "You're less than 12 months away from the life you truly want to live. Quitting corporate doesn't have to be a dream, you just need a simple roadmap to follow to make it a reality. If that feels like a practical next step you should check out my free When Should You Quit Webinar. In it I walk you through the exact steps I took to quit my own corporate job and start the business that now lets me live and work from anywhere in the world. Click the button below to confirm your registration and I'll see you there.",
-  cta: "Confirm My Registration",
-  ctaUrl: WEBINAR_URL,
-  secondaryCta: "",
-  secondaryCtaUrl: "",
-  accent: 'var(--gold)',
-},
-'nurture': {
-    label: 'Year and Half TOPS',
+  'six-months': {
+    badge: '✦ 6 Months',
     headline: 'Your results are in.',
-    body: "You're off to a solid start and I want to help you build some momentum. Looks like you JUST missed registering for my next live webinar (spots fill up fast) BUT I've got a FREE Skool community where I'm dropping gems everyday for early stage entrepreneurs. I think it would be a great fit. Click the link below to join.",
-    cta: 'Join the Free Community',
-    ctaUrl: SKOOL_URL,
-    secondaryCta: "",
-    secondaryCtaUrl: "",
-    accent: 'var(--cream)',
-    badge: '✦ Year and Half TOPS',
-  },
-  'no-idea': {
-    label: 'Start With The Idea',
-    headline: 'Your results are in.',
-    body: "You've got the right mindset about money, you just don't know what to do with it yet. And that's exactly why I built the Business Idea Generator for early entrepreneurs in your exact position. In just a couple of minutes it will give you personalized business ideas that leverage your existing skills and interest to create a product or service you can actually sell. Tap the button below and let's figure out what's the best fit for you.",
-    cta: 'Get My Free Business Idea Generator',
-    ctaUrl: GIFT_URL,
-    secondaryCta: "",
-    secondaryCtaUrl: "",
+    body: "You're less than 6 months away from the life you truly want to live. Quitting corporate doesn't have to be a dream, you just need a simple roadmap to follow to make it a reality. If that feels like a practical next step you should check out my free When Should You Quit Webinar. In it I walk you through the exact steps I took to quit my own corporate job and start the business that now lets me live and work from anywhere in the world. Click the button below to confirm your registration and I'll see you there.",
+    cta: 'Confirm My Registration',
+    ctaUrl: WEBINAR_URL,
     accent: 'var(--gold)',
-    badge: '✦ Start With The Idea',
   },
-};
-
-const PROCESSOR_NOTE: Record<string, string> = {
-  'has-processor': 'You\'re already set up to take payments, that tells me you\'re serious about your business.',
-  'zelle-cashapp': 'Zelle and CashApp work, and when you\'re ready to scale, we\'ll build out a real checkout flow for you.',
+  'one-year': {
+    badge: '✦ 1 Year Max',
+    headline: 'Your results are in.',
+    body: "You're less than 12 months away from the life you truly want to live. Quitting corporate doesn't have to be a dream, you just need a simple roadmap to follow to make it a reality. If that feels like a practical next step you should check out my free When Should You Quit Webinar. In it I walk you through the exact steps I took to quit my own corporate job and start the business that now lets me live and work from anywhere in the world. Click the button below to confirm your registration and I'll see you there.",
+    cta: 'Confirm My Registration',
+    ctaUrl: WEBINAR_URL,
+    accent: 'var(--gold)',
+  },
+  'year-half': {
+    badge: '✦ Year and Half TOPS',
+    headline: 'Your results are in.',
+    body: "You're less than 18 months away from the life you truly want to live. Quitting corporate doesn't have to be a dream, you just need a simple roadmap to follow to make it a reality. If that feels like a practical next step you should check out my free When Should You Quit Webinar. In it I walk you through the exact steps I took to quit my own corporate job and start the business that now lets me live and work from anywhere in the world. Click the button below to confirm your registration and I'll see you there.",
+    cta: 'Confirm My Registration',
+    ctaUrl: WEBINAR_URL,
+    accent: 'var(--gold)',
+  },
 };
 
 export default function ResultStep() {
-  const { result, contact, setStep } = useQuiz();
+  const { result, contact } = useQuiz();
 
   if (!result) return null;
 
-  // TEMP: unify all outcomes to the qualified screen through Monday night's masterclass. Revert after.
-  const outcome = OUTCOMES['qualified'];
-  const processorNote =
-    result.outcome === 'nurture' ? PROCESSOR_NOTE[result.paymentProcessor] || '' : '';
+  const outcome = OUTCOMES[result.outcome];
 
   return (
     <div className="w-full max-w-lg animate-fade-in-up">
@@ -106,21 +87,6 @@ export default function ResultStep() {
           {outcome.body}
         </p>
 
-        {processorNote && (
-          <div
-            className="rounded-xl px-5 py-4 mb-6 text-sm"
-            style={{
-              background: 'rgba(201,168,76,0.06)',
-              border: '1px solid rgba(201,168,76,0.15)',
-              color: 'var(--cream)',
-              fontFamily: "'DM Sans', sans-serif",
-              opacity: 0.8,
-            }}
-          >
-            {processorNote}
-          </div>
-        )}
-
         <a
           href={outcome.ctaUrl}
           target="_blank"
@@ -130,36 +96,6 @@ export default function ResultStep() {
         >
           {outcome.cta}
         </a>
-
-        {outcome.secondaryCta && outcome.secondaryCtaUrl && (
-          <a
-            href={outcome.secondaryCtaUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="block w-full rounded-xl py-4 mt-3 text-sm uppercase tracking-widest text-center"
-            style={{
-              textDecoration: 'none',
-              color: outcome.accent,
-              border: `1px solid ${outcome.accent}`,
-              fontFamily: "'DM Sans', sans-serif",
-              fontWeight: 700,
-              letterSpacing: '0.05em',
-            }}
-          >
-            {outcome.secondaryCta}
-          </a>
-        )}
-
-        {/* TEMP: hidden during the qualified/disqualified screen unification. Revert after Monday night. */}
-        {false && result.outcome === 'no-idea' && (
-          <button
-            onClick={() => setStep(0)}
-            className="block w-full mt-4 text-xs underline opacity-40 hover:opacity-70 transition-opacity text-center"
-            style={{ color: 'var(--cream)', fontFamily: "'DM Sans', sans-serif", background: 'transparent' }}
-          >
-            No thanks, I'm not interested
-          </button>
-        )}
       </div>
 
       {/* Footer */}

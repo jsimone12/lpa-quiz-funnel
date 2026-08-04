@@ -67,7 +67,7 @@ export const questions: Question[] = [
   },
 ];
 
-export type Outcome = 'qualified' | 'nurture' | 'no-idea';
+export type Outcome = 'six-months' | 'one-year' | 'year-half';
 
 export interface ScoreResult {
   outcome: Outcome;
@@ -78,24 +78,17 @@ export interface ScoreResult {
 export function calculateOutcome(answers: Record<string, Answer>): ScoreResult {
   const paymentProcessor = answers['q6']?.tag || '';
 
-  // Time + money (q6) is the sole qualifier. The "up to $100" tier does not
-  // qualify. Both higher tiers qualify and route to webinar registration.
+  // Everyone registers. Q6 (time + money) is the sole driver of which
+  // timeline they're shown; business-idea status (q1/q5) no longer routes
+  // anyone anywhere. The Business Idea Generator offer now lives on the
+  // confirmation page itself as a popup, not in this gate.
   const invest = answers['q6'];
-  const disqualified = invest?.flag === 'hard-disqualify';
 
-  if (!disqualified) {
-    return { outcome: 'qualified', score: 0, paymentProcessor };
+  if (invest?.points === 3) {
+    return { outcome: 'six-months', score: 0, paymentProcessor };
   }
-
-  // Did not qualify. If the remaining signals point to no business yet
-  // (no business, building from scratch), offer the Business Idea Generator.
-  // Otherwise nurture via the free community.
-  const noBusiness =
-    answers['q1']?.flag === 'pre-business' &&
-    answers['q5']?.flag === 'pre-business';
-
-  if (noBusiness) {
-    return { outcome: 'no-idea', score: 0, paymentProcessor };
+  if (invest?.points === 2) {
+    return { outcome: 'one-year', score: 0, paymentProcessor };
   }
-  return { outcome: 'nurture', score: 0, paymentProcessor };
+  return { outcome: 'year-half', score: 0, paymentProcessor };
 }
